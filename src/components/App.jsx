@@ -23,17 +23,24 @@ export class App extends Component {
    
   } 
   
-  handleSubmit = (e) =>{
-    e.preventDefault();
-   if(this.state.contacts.find(el => el.name === this.state.name)){
+addNewContact = ({name,number}) => {
+  if(this.state.contacts.find(el => el.name === this.state.name)){
     alert(`${this.state.name} is already in contacts`)
-   } else {
-    this.setState((state) => {
-      console.log(this.state)
-     return {contacts:[ ...state.contacts, {id:nanoid(), name : state.name, number: state.number}]}
-    })
-    console.log(this.state.contacts)
-  }}
+   } else{
+  this.setState((prevState) => ({contacts: [...prevState.contacts,{id: nanoid(), name, number}]}))}
+}
+
+  // handleSubmit = (e) =>{
+  //   e.preventDefault();
+  //  if(this.state.contacts.find(el => el.name === this.state.name)){
+  //   alert(`${this.state.name} is already in contacts`)
+  //  } else {
+  //   this.setState((state) => {
+  //     console.log(this.state)
+  //    return {contacts:[ ...state.contacts, {id:nanoid(), name : state.name, number: state.number}]}
+  //   })
+  //   console.log(this.state.contacts)
+  // }}
 
 
  filterNames = () => {
@@ -59,7 +66,7 @@ export class App extends Component {
     return(
       <div>
         <h2>Phonebook</h2>
-<ContactForm ></ContactForm>
+<ContactForm onSubmit={this.addNewContact} ></ContactForm>
 <h2>Contacts</h2>
 
 <Filter handleFilter={this.handleChange}></Filter>
